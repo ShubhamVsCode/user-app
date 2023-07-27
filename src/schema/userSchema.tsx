@@ -5,16 +5,22 @@ export const userSchema = z.object({
   firstName: z
     .string()
     .trim()
+    .nonempty({
+      message: "First Name is Required!",
+    })
     .min(2, { message: "First Name is too short!" })
     .max(30, { message: "First Name is too long!" }),
   lastName: z
     .string()
     .trim()
+    .nonempty({
+      message: "Last Name is Required!",
+    })
     .min(1, { message: "Last Name is too short!" })
     .max(30, { message: "Last Name is too long!" }),
   age: z
     .number({
-      invalid_type_error: "Age must be a number",
+      invalid_type_error: "Age is Required!",
     })
     .min(1, { message: "Age must be a number between 1 and 150!" })
     .max(150, { message: "Age must be a number between 1 and 150!" })

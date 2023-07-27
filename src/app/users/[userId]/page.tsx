@@ -17,12 +17,13 @@ import { userSchema } from "@/schema/userSchema";
 
 const UserPage = ({ params }: { params: { userId: string } }) => {
   const { userId } = params;
-  if (!userId)
+  if (!userId) {
     return (
       <div>
         <h1>User Not Found!</h1>
       </div>
     );
+  }
 
   const dispatch = useDispatch();
   const { currentUser } = useSelector(usersSelector);
@@ -33,7 +34,7 @@ const UserPage = ({ params }: { params: { userId: string } }) => {
       const { data }: { data: IUserResponse } = await AXIOS_API.get(
         `/user/${userId}`
       );
-      //   toast.success(data.message);
+      // toast.success(data.message);
       dispatch(setCurrentUser(data.data));
       return data.data;
     } catch (error) {
@@ -42,7 +43,6 @@ const UserPage = ({ params }: { params: { userId: string } }) => {
       } else if (error instanceof Error) {
         toast.error(error.message || "User not found");
       }
-      setLoading(false);
     }
   };
 
@@ -58,6 +58,7 @@ const UserPage = ({ params }: { params: { userId: string } }) => {
     register,
     handleSubmit,
     formState: { errors },
+    setFocus,
     reset,
   } = useForm<IUser>({
     resolver: zodResolver(userSchema),
@@ -70,6 +71,9 @@ const UserPage = ({ params }: { params: { userId: string } }) => {
   }, [currentUser]);
 
   const onSubmit = async (values: IUser) => {
+    if (currentUser && currentUser._id !== values._id) {
+    }
+
     try {
       setLoading(true);
       const { data }: { data: IUserResponse } = await AXIOS_API.patch(
@@ -91,8 +95,8 @@ const UserPage = ({ params }: { params: { userId: string } }) => {
   };
 
   return (
-    <div className="my-20 border max-w-lg mx-auto px-20 py-10 rounded-md">
-      <h1 className="text-3xl font-semibold text-center">Edit User</h1>
+    <div className="my-20 border max-w-lg mx-auto px-20 py-10 rounded-md shadow-xl">
+      <h1 className="text-3xl font-semibold text-center mb-5">Update User</h1>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="mx-auto max-w-md space-y-3"
@@ -149,7 +153,7 @@ const UserPage = ({ params }: { params: { userId: string } }) => {
         </div>
 
         <div className="">
-          <button className="h-10 px-6 py-2 bg-black text-white shadow hover:bg-black/90 rounded-md w-full">
+          <button className="h-10 px-6 py-2 bg-gray-800 text-white shadow hover:bg-gray-800/90 rounded-md w-full">
             Update
           </button>
         </div>

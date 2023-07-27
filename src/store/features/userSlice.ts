@@ -5,11 +5,13 @@ import { RootState } from "../store";
 type InitialState = {
   users: IUser[] | [],
   currentUser: IUser | null
+  deleteModalOpen: boolean
 };
 
 const initialState: InitialState = {
   users: [],
   currentUser: null,
+  deleteModalOpen: false
 };
 
 export const usersSlice = createSlice({
@@ -28,13 +30,17 @@ export const usersSlice = createSlice({
       state.currentUser = null;
     },
 
-    removeUser: (state) => {
-
+    removeUser: (state, action: PayloadAction<IUser>) => {
+      state.users = state.users.filter((user) => user._id !== action.payload._id);
     },
+
+    setDeleteModalOpen: (state, action: PayloadAction<boolean>) => {
+      state.deleteModalOpen = action.payload;
+    }
   },
 });
 
-export const { removeUser, setUsers, setCurrentUser, removeCurrentUser } = usersSlice.actions;
+export const { removeUser, setUsers, setCurrentUser, removeCurrentUser, setDeleteModalOpen } = usersSlice.actions;
 
 export const usersSelector = (state: RootState) => state.users;
 

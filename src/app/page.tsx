@@ -106,6 +106,16 @@ export default function Home() {
         </div>
         {/* TODO: show how many new users created today */}
         {/* TODO: show how many new users updated today */}
+        {/* TODO: filter users created between dates */}
+        {/* TODO: sorting on all params */}
+        {/* TODO: table view both for normal users and creating users from CSV * /}
+        {/* TODO: table view with selection for these users to create * /}
+        {/* TODO: create all * /}
+        {/* TODO: handling the not completed users * /}
+        {/* TODO: delete many * /}
+        {/* TODO: logs for what you have done * /}
+        {/* TODO: update only if there is some changes for updation * /}
+
         {/* <div className="text-center rounded-lg shadow-lg w-60 h-40 space-y-3 grid place-content-center border hover:shadow-xl duration-200">
           <p className="text-5xl font-bold">{users.length}</p>
           <p className="text-xl">Total Users</p>

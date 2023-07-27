@@ -3,15 +3,19 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 
 type InitialState = {
-  users: IUser[] | [],
+  users: IUser[],
   currentUser: IUser | null
   deleteModalOpen: boolean
+  searchTerm: string
+  filteredUsers: IUser[]
 };
 
 const initialState: InitialState = {
   users: [],
   currentUser: null,
-  deleteModalOpen: false
+  deleteModalOpen: false,
+  searchTerm: "",
+  filteredUsers: []
 };
 
 export const usersSlice = createSlice({
@@ -23,9 +27,9 @@ export const usersSlice = createSlice({
     },
 
     setCurrentUser: (state, action: PayloadAction<IUser>) => {
-      console.log("Setting Current User:", action.payload);
       state.currentUser = action.payload;
     },
+
     removeCurrentUser: (state) => {
       state.currentUser = null;
     },
@@ -36,11 +40,21 @@ export const usersSlice = createSlice({
 
     setDeleteModalOpen: (state, action: PayloadAction<boolean>) => {
       state.deleteModalOpen = action.payload;
+    },
+    setSearchTerm: (state, action: PayloadAction<string>) => {
+      state.searchTerm = action.payload;
+      if (action.payload === "") {
+        state.filteredUsers = [];
+      } else {
+        state.filteredUsers = state.users.filter((user) => {
+          return user.firstName.toLowerCase().includes(action.payload.toLowerCase()) || user.lastName.toLowerCase().includes(action.payload.toLowerCase());
+        });
+      }
     }
   },
 });
 
-export const { removeUser, setUsers, setCurrentUser, removeCurrentUser, setDeleteModalOpen } = usersSlice.actions;
+export const { removeUser, setUsers, setCurrentUser, removeCurrentUser, setDeleteModalOpen, setSearchTerm } = usersSlice.actions;
 
 export const usersSelector = (state: RootState) => state.users;
 

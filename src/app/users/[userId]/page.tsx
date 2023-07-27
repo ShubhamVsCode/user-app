@@ -102,7 +102,10 @@ const UserPage = ({ params }: { params: { userId: string } }) => {
         className="mx-auto max-w-md space-y-3"
       >
         <div>
-          <label htmlFor="firstName">First Name</label>
+          <label htmlFor="firstName">
+            First Name
+            <span className="text-red-400">*</span>
+          </label>
           <input
             className="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
             type="text"
@@ -115,7 +118,10 @@ const UserPage = ({ params }: { params: { userId: string } }) => {
           )}
         </div>
         <div>
-          <label htmlFor="lastName">Last Name</label>
+          <label htmlFor="lastName">
+            Last Name
+            <span className="text-red-400">*</span>
+          </label>
           <input
             className="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
             type="text"
@@ -126,7 +132,10 @@ const UserPage = ({ params }: { params: { userId: string } }) => {
           )}
         </div>
         <div>
-          <label htmlFor="age">Age</label>
+          <label htmlFor="age">
+            Age
+            <span className="text-red-400">*</span>
+          </label>
           <input
             className="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
             type="number"
@@ -139,7 +148,10 @@ const UserPage = ({ params }: { params: { userId: string } }) => {
           )}
         </div>
         <div>
-          <label htmlFor="phoneNumber">Phone Number</label>
+          <label htmlFor="phoneNumber">
+            Phone Number
+            <span className="text-red-400">*</span>
+          </label>
           <input
             className="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
             type="number"

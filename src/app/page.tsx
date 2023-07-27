@@ -17,7 +17,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function Home() {
   const dispatch = useDispatch();
-  const { users, currentUser } = useSelector(usersSelector);
+  const { users, currentUser, filteredUsers, searchTerm } =
+    useSelector(usersSelector);
   const [loading, setLoading] = useState(false);
   const [isDeleted, setIsDeleted] = useState(false);
   const [showUndoToast, setShowUndoToast] = useState(false);
@@ -25,9 +26,8 @@ export default function Home() {
 
   const getUsers = async () => {
     try {
-      setLoading(true);
       const { data }: { data: IUsersResponse } = await AXIOS_API.get("/users");
-      toast.success(data.message);
+      // toast.success(data.message);
       dispatch(setUsers(data.data));
       setLoading(false);
       return data.data;
@@ -93,6 +93,7 @@ export default function Home() {
   };
 
   useEffect(() => {
+    setLoading(true);
     getUsers();
   }, []);
 
@@ -114,9 +115,31 @@ export default function Home() {
       <section className="my-10">
         <h1 className="text-xl mb-3">Users</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-7 gap-y-5">
-          {users.map((user: IUser) => (
-            <UserCard key={user._id} user={user} />
-          ))}
+          {loading &&
+            new Array(4)
+              .fill("-")
+              .map((_, i) => (
+                <div
+                  key={i}
+                  className="border border-black/30 bg-slate-200 text-center h-48 w-full grid place-content-center rounded-md space-y-3 shadow-sm hover:shadow-lg duration-200 animate-pulse"
+                ></div>
+              ))}
+
+          {searchTerm ? (
+            filteredUsers.length > 0 ? (
+              filteredUsers.map((user: IUser, i) => (
+                <UserCard key={user._id} user={user} index={i} />
+              ))
+            ) : (
+              <>
+                <h1 className="text-2xl">No User Found!</h1>
+              </>
+            )
+          ) : (
+            users.map((user: IUser, i) => (
+              <UserCard key={user._id} user={user} index={i} />
+            ))
+          )}
         </div>
       </section>
 

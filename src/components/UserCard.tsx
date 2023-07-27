@@ -4,11 +4,13 @@ import Link from "next/link";
 import React from "react";
 import { useDispatch } from "react-redux";
 
-const UserCard = ({ user }: { user: IUser }) => {
+const UserCard = ({ user }: { user: IUser; index: number }) => {
   const dispatch = useDispatch();
 
   return (
-    <div className="relative border border-black/30 bg-slate-100 text-center h-48 grid place-content-center rounded-md space-y-3 shadow-sm hover:shadow-lg duration-200">
+    <div
+      className={`relative border border-black/30 bg-slate-100 text-center h-48 grid place-content-center rounded-md space-y-3 shadow-sm hover:shadow-lg duration-200`}
+    >
       <p className="text-2xl font-bold flex justify-center items-center gap-2">
         <User2 /> {user.firstName} {user.lastName}
       </p>

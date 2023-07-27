@@ -17,9 +17,15 @@ const Navbar = () => {
         {/* <Link href={"/users"}>Users</Link> */}
         <Link
           href={"/users/create"}
-          className="h-10 px-6 py-2 bg-gray-800 text-white shadow hover:bg-gray-800/90 rounded-md w-full"
+          className="h-10 px-6 py-2 bg-gray-800 text-white shadow hover:bg-gray-800/90 rounded-md"
         >
           Create User
+        </Link>
+        <Link
+          href={"/users/create/csv"}
+          className="h-10 px-6 py-2 bg-gray-800 text-white shadow hover:bg-gray-800/90 rounded-md"
+        >
+          Create Multiple User
         </Link>
       </div>
     </nav>

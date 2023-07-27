@@ -8,6 +8,7 @@ type InitialState = {
   deleteModalOpen: boolean
   searchTerm: string
   filteredUsers: IUser[]
+  usersFromCSV: IUser[]
 };
 
 const initialState: InitialState = {
@@ -15,7 +16,8 @@ const initialState: InitialState = {
   currentUser: null,
   deleteModalOpen: false,
   searchTerm: "",
-  filteredUsers: []
+  filteredUsers: [],
+  usersFromCSV: []
 };
 
 export const usersSlice = createSlice({
@@ -50,11 +52,16 @@ export const usersSlice = createSlice({
           return user.firstName.toLowerCase().includes(action.payload.toLowerCase()) || user.lastName.toLowerCase().includes(action.payload.toLowerCase());
         });
       }
+    },
+
+    setUsersFromCSV: (state, action: PayloadAction<IUser[]>) => {
+      console.log(action.payload);
+      state.usersFromCSV = action.payload
     }
   },
 });
 
-export const { removeUser, setUsers, setCurrentUser, removeCurrentUser, setDeleteModalOpen, setSearchTerm } = usersSlice.actions;
+export const { removeUser, setUsers, setCurrentUser, removeCurrentUser, setDeleteModalOpen, setSearchTerm, setUsersFromCSV } = usersSlice.actions;
 
 export const usersSelector = (state: RootState) => state.users;
 

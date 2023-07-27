@@ -13,6 +13,7 @@ import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { userSchema } from "@/schema/userSchema";
+import FileComponent from "@/components/FileComponent";
 
 const CreatePage = () => {
   const dispatch = useDispatch();

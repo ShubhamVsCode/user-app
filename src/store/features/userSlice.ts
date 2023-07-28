@@ -48,12 +48,12 @@ export const usersSlice = createSlice({
       state.deleteModalOpen = action.payload;
     },
     setSearchTerm: (state, action: PayloadAction<string>) => {
-      state.searchTerm = action.payload;
+      state.searchTerm = action.payload.trim();
       if (action.payload === "") {
         state.filteredUsers = state.users;
       } else {
         state.filteredUsers = state.users.filter((user) => {
-          return user.firstName.toLowerCase().includes(action.payload.toLowerCase()) || user.lastName.toLowerCase().includes(action.payload.toLowerCase());
+          return user.firstName.toLowerCase().includes(action.payload.trim().toLowerCase()) || user.lastName.toLowerCase().includes(action.payload.trim().toLowerCase());
         });
       }
     },

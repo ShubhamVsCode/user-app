@@ -13,7 +13,7 @@ const Navbar = () => {
         <SearchUser />
       </div>
 
-      <div className="flex gap-10">
+      <div className="flex gap-5">
         {/* <Link href={"/users"}>Users</Link> */}
         <Link
           href={"/users/create"}

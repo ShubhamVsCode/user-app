@@ -14,6 +14,7 @@ import { AxiosError } from "axios";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
+import dayjs from "dayjs";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -99,8 +100,8 @@ export default function Home() {
 
   return (
     <main className="px-5 py-2 md:px-20 md:py-10">
-      <section className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 gap-x-7 gap-y-5">
-        <div className="text-center rounded-lg shadow-lg w-60 h-40 space-y-3 grid place-content-center border hover:shadow-xl duration-200">
+      <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-7 gap-y-5">
+        <div className="text-center mx-auto rounded-lg shadow-lg w-60 h-40 space-y-3 grid place-content-center border border-black/20 hover:shadow-xl duration-200">
           <p className="text-5xl font-bold">{users.length}</p>
           <p className="text-xl">Total Users</p>
         </div>
@@ -108,25 +109,34 @@ export default function Home() {
         {/* TODO: show how many new users updated today */}
         {/* TODO: filter users created between dates */}
         {/* TODO: sorting on all params */}
-        {/* TODO: table view both for normal users and creating users from CSV * /}
-        {/* TODO: table view with selection for these users to create * /}
-        {/* TODO: create all * /}
-        {/* TODO: handling the not completed users * /}
-        {/* TODO: delete many * /}
-        {/* TODO: logs for what you have done * /}
-        {/* TODO: update only if there is some changes for updation * /}
-        {/* TODO: export all users data * /}
+        {/* TODO: table view both for normal users and creating users from CSV */}
+        {/* TODO: table view with selection for these users to create */}
+        {/* TODO: create all */}
+        {/* TODO: handling the not completed users */}
+        {/* TODO: delete many */}
+        {/* TODO: logs for what you have done */}
+        {/* TODO: update only if there is some changes for updation */}
+        {/* TODO: export all users data */}
 
-        {/* <div className="text-center rounded-lg shadow-lg w-60 h-40 space-y-3 grid place-content-center border hover:shadow-xl duration-200">
-          <p className="text-5xl font-bold">{users.length}</p>
-          <p className="text-xl">Total Users</p>
-        </div> */}
+        <div className="text-center mx-auto rounded-lg shadow-lg w-60 h-40 space-y-3 grid place-content-center border hover:shadow-xl duration-200 border-black/20">
+          <p className="text-5xl font-bold">
+            {
+              users.filter((user, i) => {
+                return dayjs(user.createdAt).isSame(dayjs(), "day");
+              })?.length
+            }
+          </p>
+          <p className="text-xl">Users Created Today</p>
+        </div>
       </section>
 
       <section className="my-10">
-        <h1 className="text-xl mb-3">Users</h1>
+        <div>
+          <h1 className="text-xl mb-3">Users</h1>
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-7 gap-y-5">
           {loading &&
+            users.length === 0 &&
             new Array(4)
               .fill("-")
               .map((_, i) => (

@@ -59,7 +59,6 @@ export const usersSlice = createSlice({
     },
 
     setUsersFromCSV: (state, action: PayloadAction<IUser[]>) => {
-      console.log(action.payload);
       state.usersFromCSV = action.payload
     },
 

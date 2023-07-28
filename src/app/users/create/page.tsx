@@ -58,7 +58,7 @@ const CreatePage = () => {
     return () => {
       dispatch(removeCurrentUser());
     };
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="my-20 border max-w-lg mx-auto px-20 py-10 rounded-md shadow-xl">

@@ -17,42 +17,34 @@ import { userSchema } from "@/schema/userSchema";
 
 const UserPage = ({ params }: { params: { userId: string } }) => {
   const { userId } = params;
-  if (!userId) {
-    return (
-      <div>
-        <h1>User Not Found!</h1>
-      </div>
-    );
-  }
 
   const dispatch = useDispatch();
   const { currentUser } = useSelector(usersSelector);
   const [loading, setLoading] = useState(false);
 
-  const getUser = async () => {
-    try {
-      const { data }: { data: IUserResponse } = await AXIOS_API.get(
-        `/user/${userId}`
-      );
-      // toast.success(data.message);
-      dispatch(setCurrentUser(data.data));
-      return data.data;
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        toast.error(error.response?.data?.message || "User not found");
-      } else if (error instanceof Error) {
-        toast.error(error.message || "User not found");
-      }
-    }
-  };
-
   useEffect(() => {
-    getUser();
+    const getUser = async () => {
+      try {
+        const { data }: { data: IUserResponse } = await AXIOS_API.get(
+          `/user/${userId}`
+        );
+        // toast.success(data.message);
+        dispatch(setCurrentUser(data.data));
+        return data.data;
+      } catch (error) {
+        if (error instanceof AxiosError) {
+          toast.error(error.response?.data?.message || "User not found");
+        } else if (error instanceof Error) {
+          toast.error(error.message || "User not found");
+        }
+      }
+    };
 
+    getUser();
     return () => {
       dispatch(removeCurrentUser());
     };
-  }, []);
+  }, [dispatch, userId]);
 
   const {
     register,
@@ -68,7 +60,7 @@ const UserPage = ({ params }: { params: { userId: string } }) => {
     if (currentUser) {
       reset(currentUser);
     }
-  }, [currentUser]);
+  }, [currentUser, reset]);
 
   const onSubmit = async (values: IUser) => {
     if (currentUser && currentUser._id !== values._id) {
@@ -93,6 +85,14 @@ const UserPage = ({ params }: { params: { userId: string } }) => {
       setLoading(false);
     }
   };
+
+  if (!userId) {
+    return (
+      <div>
+        <h1>User Not Found!</h1>
+      </div>
+    );
+  }
 
   return (
     <div className="my-20 border max-w-lg mx-auto px-20 py-10 rounded-md shadow-xl">

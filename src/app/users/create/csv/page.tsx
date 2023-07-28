@@ -17,49 +17,7 @@ import FileComponent from "@/components/FileComponent";
 import CreateUserForm from "@/components/CreateUserForm";
 
 const CreatePage = () => {
-  const dispatch = useDispatch();
   const { usersFromCSV } = useSelector(usersSelector);
-  const [loading, setLoading] = useState(false);
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm<IUser>({
-    resolver: zodResolver(userSchema),
-  });
-
-  const onSubmit = async (values: IUser) => {
-    try {
-      const { data }: { data: IUserResponse } = await AXIOS_API.post(
-        `/user/create`,
-        values
-      );
-      toast.success(data.message);
-      dispatch(setCurrentUser(data.data));
-
-      // Removing Focus When We Submit the Data while we are on PhoneNumber field
-      if (document.activeElement instanceof HTMLElement) {
-        document.activeElement.blur();
-      }
-      reset();
-      return data.data;
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        toast.error(error.response?.data?.message || "Unable to Create User");
-      } else if (error instanceof Error) {
-        toast.error(error.message || "Unable to Create User");
-      }
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    return () => {
-      dispatch(removeCurrentUser());
-    };
-  }, []);
 
   return (
     <section className="px-5 md:px-20">

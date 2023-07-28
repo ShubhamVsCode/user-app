@@ -15,10 +15,11 @@ import { useEffect, useRef, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import dayjs from "dayjs";
+import SortComponent from "@/components/SortComponent";
 
 export default function Home() {
   const dispatch = useDispatch();
-  const { users, currentUser, filteredUsers, searchTerm } =
+  const { users, currentUser, filteredUsers, searchTerm, sortOption } =
     useSelector(usersSelector);
   const [loading, setLoading] = useState(false);
   const [isDeleted, setIsDeleted] = useState(false);
@@ -131,8 +132,9 @@ export default function Home() {
       </section>
 
       <section className="my-10">
-        <div>
+        <div className="flex justify-between items-center">
           <h1 className="text-xl mb-3">Users</h1>
+          <SortComponent />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-7 gap-y-5">
           {loading &&
@@ -146,15 +148,13 @@ export default function Home() {
                 ></div>
               ))}
 
-          {searchTerm ? (
+          {searchTerm || sortOption !== "none" ? (
             filteredUsers.length > 0 ? (
               filteredUsers.map((user: IUser, i) => (
                 <UserCard key={user._id} user={user} index={i} />
               ))
             ) : (
-              <>
-                <h1 className="text-2xl">No User Found!</h1>
-              </>
+              <>{searchTerm && <h1 className="text-2xl">No Users Found!</h1>}</>
             )
           ) : (
             users.map((user: IUser, i) => (

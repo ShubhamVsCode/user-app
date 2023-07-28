@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
+import dayjs from "dayjs";
 
 type InitialState = {
   users: IUser[],
@@ -9,6 +10,7 @@ type InitialState = {
   searchTerm: string
   filteredUsers: IUser[]
   usersFromCSV: IUser[]
+  sortOption: string
 };
 
 const initialState: InitialState = {
@@ -17,7 +19,8 @@ const initialState: InitialState = {
   deleteModalOpen: false,
   searchTerm: "",
   filteredUsers: [],
-  usersFromCSV: []
+  usersFromCSV: [],
+  sortOption: ""
 };
 
 export const usersSlice = createSlice({
@@ -26,6 +29,7 @@ export const usersSlice = createSlice({
   reducers: {
     setUsers: (state, action: PayloadAction<IUser[]>) => {
       state.users = action.payload;
+      state.filteredUsers = action.payload
     },
 
     setCurrentUser: (state, action: PayloadAction<IUser>) => {
@@ -46,7 +50,7 @@ export const usersSlice = createSlice({
     setSearchTerm: (state, action: PayloadAction<string>) => {
       state.searchTerm = action.payload;
       if (action.payload === "") {
-        state.filteredUsers = [];
+        state.filteredUsers = state.users;
       } else {
         state.filteredUsers = state.users.filter((user) => {
           return user.firstName.toLowerCase().includes(action.payload.toLowerCase()) || user.lastName.toLowerCase().includes(action.payload.toLowerCase());
@@ -57,11 +61,65 @@ export const usersSlice = createSlice({
     setUsersFromCSV: (state, action: PayloadAction<IUser[]>) => {
       console.log(action.payload);
       state.usersFromCSV = action.payload
+    },
+
+    setSortOption: (state, action: PayloadAction<string>) => {
+      state.sortOption = action.payload
+
+      switch (state.sortOption) {
+        case "nameAsc":
+          state.filteredUsers.sort((a, b) => {
+            return a.firstName.localeCompare(b.firstName);
+          })
+          break;
+
+        case "nameDesc":
+          state.filteredUsers.sort((a, b) => {
+            return b.firstName.localeCompare(a.firstName);
+          })
+          break;
+
+        case "ageAsc":
+          state.filteredUsers.sort((a, b) => {
+            return a.age - b.age;
+          })
+          break;
+
+        case "ageDesc":
+          state.filteredUsers.sort((a, b) => {
+            return b.age - a.age;
+          })
+          break;
+
+        case "createdAtAsc":
+          state.filteredUsers.sort((a, b) => {
+            const dateA = dayjs(a.createdAt);
+            const dateB = dayjs(b.createdAt);
+            return dateA.diff(dateB);
+          });
+          break;
+
+        case "createdAtDesc":
+          state.filteredUsers.sort((a, b) => {
+            const dateA = dayjs(a.createdAt);
+            const dateB = dayjs(b.createdAt);
+            return dateB.diff(dateA);
+          });
+          break;
+
+        case "none":
+          state.filteredUsers = state.users
+          break;
+
+        default:
+          state.filteredUsers = state.users
+      }
+
     }
   },
 });
 
-export const { removeUser, setUsers, setCurrentUser, removeCurrentUser, setDeleteModalOpen, setSearchTerm, setUsersFromCSV } = usersSlice.actions;
+export const { removeUser, setUsers, setCurrentUser, removeCurrentUser, setDeleteModalOpen, setSearchTerm, setUsersFromCSV, setSortOption } = usersSlice.actions;
 
 export const usersSelector = (state: RootState) => state.users;
 

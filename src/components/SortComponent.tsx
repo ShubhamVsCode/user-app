@@ -13,11 +13,13 @@ const SortComponent = () => {
 
   return (
     <div>
-      <label htmlFor="sorting">Sort By</label>
+      <label htmlFor="sorting" className="">
+        Sort By:{" "}
+      </label>
       <select
         name="sorting"
         id="sorting"
-        className="border"
+        className="border border-black/20 px-1 py-3 rounded-md"
         onChange={handleChange}
       >
         <option value="none">None</option>

@@ -42,6 +42,7 @@ export const usersSlice = createSlice({
 
     removeUser: (state, action: PayloadAction<IUser>) => {
       state.users = state.users.filter((user) => user._id !== action.payload._id);
+      state.filteredUsers = state.users
     },
 
     setDeleteModalOpen: (state, action: PayloadAction<boolean>) => {
@@ -113,7 +114,6 @@ export const usersSlice = createSlice({
         default:
           state.filteredUsers = state.users
       }
-
     }
   },
 });

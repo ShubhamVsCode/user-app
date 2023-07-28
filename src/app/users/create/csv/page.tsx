@@ -27,13 +27,12 @@ const CreatePage = () => {
         Create User from CSV
       </h1>
       <div className="text-center mb-5 flex justify-center items-center gap-2">
-        <Link
+        <a
           href={"/SampleUserData.csv"}
           className="border border-black/30 rounded-md px-2 py-1 bg-transparent hover:bg-slate-200 duration-300 flex group"
-          download={true}
         >
           <Download />
-        </Link>
+        </a>
 
         <Link
           href={

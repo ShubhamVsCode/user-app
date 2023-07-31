@@ -4,11 +4,12 @@ import { AXIOS_API } from "@/lib/axiosInstance";
 import {
   removeCurrentUser,
   setCurrentUser,
+  setUsersFromCSV,
   usersSelector,
 } from "@/store/features/userSlice";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AxiosError } from "axios";
+import axios, { AxiosError } from "axios";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -20,6 +21,26 @@ import { Download } from "lucide-react";
 
 const CreatePage = () => {
   const { usersFromCSV } = useSelector(usersSelector);
+  const dispatch = useDispatch();
+
+  const createManyUsers = async () => {
+    try {
+      const users: IUser[] = await axios.all(
+        usersFromCSV.map((user) => {
+          return AXIOS_API.post("/user/create", user);
+        })
+      );
+
+      dispatch(setUsersFromCSV([]));
+      toast.success(users?.length + " Users Created");
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        toast.error(error.response?.data?.message || "Unable to Create Users");
+      } else if (error instanceof Error) {
+        toast.error(error.message || "Unable to Create Users");
+      }
+    }
+  };
 
   return (
     <section className="px-5 md:px-20">
@@ -45,8 +66,19 @@ const CreatePage = () => {
         </Link>
       </div>
 
-      <div className="max-w-lg mx-auto">
+      <div className="max-w-md mx-auto">
         <FileComponent />
+
+        {usersFromCSV.length > 0 && (
+          <div className="mt-3">
+            <button
+              className="h-10 w-full px-6 py-2 bg-gray-800 text-white shadow hover:bg-gray-800/90 rounded-md"
+              onClick={createManyUsers}
+            >
+              Create All
+            </button>
+          </div>
+        )}
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-x-10 gap-y-5 mt-7">

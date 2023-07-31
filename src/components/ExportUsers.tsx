@@ -25,7 +25,7 @@ const ExportUsers = () => {
         className="h-10 px-6 py-2 bg-gray-800 text-white shadow hover:bg-gray-800/90 rounded-md"
         onClick={handleExport}
       >
-        Export to CSV
+        Export Users
       </button>
     </div>
   );

@@ -19,7 +19,7 @@ const SortComponent = () => {
       <select
         name="sorting"
         id="sorting"
-        className="border border-black/20 px-1 py-3 rounded-md"
+        className="border border-black/20 px-1 py-2 rounded-md"
         onChange={handleChange}
       >
         <option value="none">None</option>

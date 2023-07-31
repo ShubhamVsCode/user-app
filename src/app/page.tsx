@@ -16,6 +16,7 @@ import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import dayjs from "dayjs";
 import SortComponent from "@/components/SortComponent";
+import ExportUsers from "@/components/ExportUsers";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -120,7 +121,10 @@ export default function Home() {
       <section className="my-10">
         <div className="flex justify-between items-center my-3">
           <h1 className="text-xl">Users</h1>
-          <SortComponent />
+          <div className="flex gap-5 items-center">
+            <SortComponent />
+            <ExportUsers />
+          </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-7 gap-y-5">
           {loading &&

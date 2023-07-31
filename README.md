@@ -1,4 +1,4 @@
-# User Management Dashboard
+# User Management Dashboard | [Live Demo](https://user-app-nine-cyan.vercel.app/)
 
 This is a user management dashboard built with Next.js, TypeScript, Tailwind CSS for styling, and Redux for state management. The dashboard allows an admin to perform CRUD (Create, Read, Update, Delete) operations on user details. It interacts with the backend API to handle user data.
 

@@ -54,7 +54,9 @@ export const usersSlice = createSlice({
         state.filteredUsers = state.users;
       } else {
         state.filteredUsers = state.users.filter((user) => {
-          return user.firstName.toLowerCase().includes(action.payload.trim().toLowerCase()) || user.lastName.toLowerCase().includes(action.payload.trim().toLowerCase());
+          return user.firstName.toLowerCase().includes(action.payload.trim().toLowerCase()) ||
+            user.lastName.toLowerCase().includes(action.payload.trim().toLowerCase()) ||
+            user.phoneNumber.toLowerCase().includes(action.payload.trim().toLowerCase());
         });
       }
     },
